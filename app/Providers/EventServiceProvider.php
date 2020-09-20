@@ -2,10 +2,17 @@
 
 namespace App\Providers;
 
+use App\Listeners\ConfigureTenantConnection;
+use App\Listeners\ConfigureTenantDatabase;
+use App\Listeners\ConfigureTenantMigrations;
+use App\Listeners\ResolveTenantConnection;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
+use Tenancy\Affects\Connections\Events\Drivers\Configuring as DriversConfiguring;
+use Tenancy\Affects\Connections\Events\Resolving;
+use Tenancy\Hooks\Database\Events\Drivers\Configuring;
+use Tenancy\Hooks\Migration\Events\ConfigureMigrations;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -17,6 +24,18 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        Configuring::class => [
+            ConfigureTenantDatabase::class,
+        ],
+        DriversConfiguring::class => [
+            ConfigureTenantConnection::class,
+        ],
+        ConfigureMigrations::class => [
+            ConfigureTenantMigrations::class,
+        ],
+        Resolving::class => [
+            ResolveTenantConnection::class,
         ],
     ];
 

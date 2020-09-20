@@ -13,7 +13,13 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "tenancy/affects-connections": "^1.1",
+        "tenancy/db-driver-mysql": "^1.1",
+        "tenancy/framework": "^1.1",
+        "tenancy/hooks-database": "^1.1",
+        "tenancy/hooks-migration": "^1.1",
+        "tenancy/identification-driver-queue": "^1.1"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
