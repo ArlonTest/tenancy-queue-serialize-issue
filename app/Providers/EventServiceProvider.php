@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\TestEvent;
 use App\Listeners\ConfigureTenantConnection;
 use App\Listeners\ConfigureTenantDatabase;
 use App\Listeners\ConfigureTenantMigrations;
 use App\Listeners\ResolveTenantConnection;
+use App\Listeners\TestListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -36,6 +38,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         Resolving::class => [
             ResolveTenantConnection::class,
+        ],
+
+        TestEvent::class => [
+            TestListener::class,
         ],
     ];
 
