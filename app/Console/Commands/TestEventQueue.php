@@ -6,6 +6,8 @@ use App\Events\TestEvent;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Tenancy\Facades\Tenancy;
 
 class TestEventQueue extends Command
@@ -41,10 +43,23 @@ class TestEventQueue extends Command
      */
     public function handle()
     {
-        $t = Tenant::first();
+        $t = Tenant::query()->first();
+
+        if ( ! $t) {
+            $t = new Tenant();
+            $t->save();
+        }
+
         Tenancy::setTenant($t);
 
-        $u = User::first();
+        $u = User::query()->first();
+        if ( ! $u) {
+            $u           = new User();
+            $u->name     = "Rocky";
+            $u->email    = "wpkpda@gmail.com";
+            $u->password = Hash::make(Str::random(8));
+            $u->save();
+        }
 
         event(new TestEvent($u));
 
